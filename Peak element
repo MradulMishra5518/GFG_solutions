@@ -1,0 +1,28 @@
+
+class Solution {
+  public:
+    int peakElement(vector<int> &arr) {
+        // Your code here
+        if(arr.size()<3){
+            if(arr.size()==2 && arr[1]>arr[0])
+                return 1;
+            else
+                return 0;
+        }
+        int i=1;
+        int j=arr.size()-2;
+        if(arr[i-1]>arr[i])
+            return i-1;
+        if(arr[j+1]>arr[j])
+            return j+1;
+        while(i<=j){
+            if(arr[i-1]<arr[i] && arr[i+1]<arr[i])
+                return i;
+            else if(arr[j-1]<arr[j] && arr[j+1]<arr[j])
+                return j;
+            i++;
+            j++;
+        }
+        return -1;
+    }
+};
