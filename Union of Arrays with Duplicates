@@ -1,0 +1,21 @@
+ int findUnion(vector<int>& a, vector<int>& b) {
+        int count=0;
+        unordered_map<int,int> u;
+        for(int i:a)
+        {
+            if(!u[i])
+            {
+            count++;
+            u[i]++;
+            }
+        }
+        for(int i:b)
+        {
+            if(!u[i])
+            {
+            count++;
+            u[i]++;
+            }
+        }
+       return count;
+}
