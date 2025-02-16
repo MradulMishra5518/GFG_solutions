@@ -1,0 +1,35 @@
+class Solution {
+  public:
+    void helper(Node* root,vector<int>&ans){
+        if(root==NULL) return;
+        helper(root->left,ans);
+        ans.push_back(root->data);
+        helper(root->right,ans);
+    }
+    vector<int> serialize(Node *root) {
+        vector<int>ans;
+        helper(root,ans);
+        return ans;
+    }
+
+    void help(vector<int>&arr,int index,Node* root,Node* &sol){
+        if(index>=arr.size()) return;
+        Node* node=new Node(arr[index]);
+        node->left=root;
+        if(index+1<arr.size()){
+            Node* r=new Node(arr[index+1]);
+            node->right=r;
+        }
+        sol=node;
+        help(arr,index+2,node,sol);
+    }
+    Node *deSerialize(vector<int> &arr) {
+        Node* ans=new Node(arr[0]);
+        if(arr.size()==1){
+            return ans;
+        }
+        Node* sol=NULL;
+        help(arr,1,ans,sol);
+        return sol;
+    }
+};
