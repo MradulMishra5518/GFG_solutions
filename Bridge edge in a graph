@@ -1,0 +1,25 @@
+class Solution {
+  public:
+    void dfs(int node, vector<int> adj[], vector<bool> &visited) {
+        visited[node] = true;
+        for (int neigh : adj[node]) {
+            if (!visited[neigh]) {
+                dfs(neigh, adj, visited);
+            }
+        }
+    }
+    
+    bool isBridge(int V, vector<vector<int>> &edges, int c, int d) {
+        vector<int> adj[V];
+        for (auto &edge : edges) {
+            if ((edge[0] == c && edge[1] == d) || (edge[0] == d && edge[1] == c)) continue;
+            adj[edge[0]].push_back(edge[1]);
+            adj[edge[1]].push_back(edge[0]);
+        }
+    
+        vector<bool> visited(V, false);
+        dfs(c, adj, visited);
+    
+        return !visited[d];
+    }
+};
