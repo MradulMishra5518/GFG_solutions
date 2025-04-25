@@ -1,0 +1,13 @@
+class Solution {
+  public:
+    int majorityElement(vector<int>& arr) {
+        // code here
+        unordered_map<int,int> mp;
+        for(auto it:arr){
+            mp[it]++;
+            if(mp[it]>arr.size()/2)
+                return it;
+        }
+        return -1;
+    }
+};
