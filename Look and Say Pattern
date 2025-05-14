@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    static unordered_map<int,string>mp;
+    static void takeOut()
+    {
+        if(mp.size()>1)return;
+        mp[1] = "1";
+        mp[2] = "11";
+        string str= "11";
+        for(int _=3;_<=30;_++)
+        {
+            str+='/';
+            string temp = "";
+            for(int i= 0;i<str.length()-1;i++)
+            {
+                int cnt = 1;
+                char ch = str[i];
+                while(str[i+1]==ch)
+                {
+                    cnt++;
+                    i++;
+                }
+                temp+=to_string(cnt);
+                temp+=ch;
+            }
+            mp[_]=temp;
+            str = temp;
+        }
+    }
+    string countAndSay(int n) {
+        // code here
+        takeOut();
+        return mp[n];
+    }
+};
+unordered_map<int,string>Solution::mp;
