@@ -1,0 +1,35 @@
+class Solution {
+  public:
+     bool postOrder(Node *root,  unordered_map<int,int> &mp)
+    {
+        if(root->left == NULL and root->right == NULL)
+        {
+                if(mp.find(root->data - 1) != mp.end() and mp.find(root->data + 1) != mp.end())
+                    return true;
+                if(root->data == 1 and mp.find(root->data + 1) != mp.end())
+                    return true;
+        }
+        bool left = false;
+        bool right = false;
+        mp[root->data] = 1;
+        if(root->left)
+        {
+            left = postOrder(root->left,mp);
+            if(left)
+                return true;
+        }
+        if(root->right)
+        {
+            right = postOrder(root->right,mp);
+            if(right)
+                return true;
+        }
+            
+        return false;
+    }
+    bool isDeadEnd(Node *root) 
+    {
+        unordered_map<int,int> mp;
+        return postOrder(root,mp);
+    }
+};
