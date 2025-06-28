@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    vector<int> countLessEq(vector<int>& a, vector<int>& b) {
+        // code here
+       sort(b.begin(),b.end());
+       int i = 0;
+       int n = a.size();
+       vector<int> result(n,0);
+       while(i<n)
+       {
+           int k = a[i];
+           int start = 0;
+           int end = b.size()-1;
+           int res = 0;
+           while(start<=end)
+           {
+               int mid = (start+end)/2;
+               if(b[mid]>k)
+               {
+                   end = mid-1;
+                   
+               }
+               else{
+                   res = max(res,mid+1);
+                   start = mid+1;
+                   
+               }
+               
+           }
+           result[i] = res;
+           i++;
+           
+       }
+       return result;
+    }
+};
