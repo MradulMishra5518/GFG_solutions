@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<int> findGreater(vector<int>& arr) {
+        int n = arr.size();
+        map<int, int> mp; // To store frequency of each element
+        
+        // Step 1: Compute frequencies of all elements
+        for(int x : arr) {
+            mp[x]++;
+        }
+        
+        stack<int> st; // Stack to keep track of elements in decreasing order of frequency
+        vector<int> ans(n, -1); // Initialize answer array with -1
+        
+        // Step 2: Traverse from right to left
+        for(int i = n-1; i >= 0; --i) {
+            if(st.empty()) {
+                // If stack is empty, no greater frequency element exists to the right
+                st.push(arr[i]);
+            } else {
+                // Pop elements from stack whose frequency <= current element's frequency
+                while(!st.empty() && mp[arr[i]] >= mp[st.top()]) {
+                    st.pop();
+                }
+                
+                // If stack is not empty, top element has higher frequency
+                ans[i] = st.empty() ? -1 : st.top();
+                
+                // Push current element into the stack
+                st.push(arr[i]);
+            }
+        }
+        
+        return ans;
+    }
+};
