@@ -1,0 +1,43 @@
+class Solution {
+  private:
+    unordered_set<long> selectedSet;
+    int maxi;
+    int dp[33];
+
+    int bottomup(string s){
+        int len = s.size();
+        vector<int> dp(len + 1, 0); // dp[i] = min cuts from index i
+
+        for(int ind = len - 1; ind >= 0; ind--){
+            if(s[ind] == '0'){
+                dp[ind] = 32;  // ❌ Cannot start with '0'
+            } else {
+                int ans = 32;
+                long curr = 0;
+
+                for(int i = ind; i < len; i++){
+                    curr = (curr << 1) + (s[i] - '0');
+                    if(selectedSet.count(curr)){
+                        ans = min(ans, 1 + dp[i + 1]);
+                    }
+                }
+
+                dp[ind] = ans;
+            }
+        }
+
+        return (dp[0] >= 32) ? -1 : dp[0];
+    }
+
+  public:
+    Solution(){
+        maxi = INT_MAX;
+        for(long i = 1; i < maxi; i *= 5){
+            selectedSet.insert(i);
+        }
+    }
+
+    int cuts(string s) {
+        return bottomup(s);
+    }
+};
