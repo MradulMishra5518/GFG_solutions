@@ -1,0 +1,60 @@
+class Solution {
+  public:
+    int balanceSums(vector<vector<int>>& mat) {
+        // code here
+        int n=mat.size();
+        int m=mat[0].size();
+        
+        vector<int> row(n),col(m);
+        for(int i=0;i<n;i++){
+            int sum=0;
+            for(int j=0;j<m;j++){
+                sum=sum+mat[i][j];
+            }
+            row[i]=sum;
+        }
+        for(int i=0;i<m;i++){
+            int sum=0;
+            for(int j=0;j<n;j++){
+                sum=sum+mat[j][i];
+            }
+            col[i]=sum;
+        }
+        sort(row.begin(),row.end());
+        sort(col.begin(),col.end());
+        int req=max(row.back(),col.back());
+        
+        int i=0;
+        int j=0;
+        int req_op=0;
+            
+        // for(auto it:row) cout<<it<<" ";
+        // cout<<endl;
+        // for(auto it:col) cout<<it<<" ";
+        // cout<<endl;
+        
+        
+        while(i<n){
+            int take=req-row[i];
+            req_op=req_op+take;
+            
+            while(j<m && take>0){
+                
+                int t=req-col[j];
+                
+                if(take>=t){
+                    take=take-t;
+                    j++;
+                }
+                else {
+                    col[j]=col[j]+take;
+                    break;
+                }
+            }
+            
+            i++;
+        }
+        return req_op;
+    }
+};
+
